@@ -1,22 +1,7 @@
-const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs');
-
-const { SQS_QUEUE_URL, REGION } = process.env;
-
-const sqsClient = new SQSClient({ region: REGION });
-
-const params = {
-  DelaySeconds: 10,
-  MessageBody: 'Test data body',
-  QueueUrl: SQS_QUEUE_URL,
-};
-
 exports.handler = async function (event) {
   console.log('request:', JSON.stringify(event, undefined, 2));
-
   try {
-    console.log('Queue URL is:', SQS_QUEUE_URL);
-    const data = await sqsClient.send(new SendMessageCommand(params));
-    console.log('Success, message sent. MessageID:', data.MessageId);
+    console.log('Triggered delayed Secondary Lambda from queue');
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'text/plain' },
