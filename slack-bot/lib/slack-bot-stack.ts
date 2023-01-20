@@ -40,6 +40,9 @@ export class SlackBotStack extends cdk.Stack {
       code: lambda.Code.fromAsset('lambda'),
       handler: 'vitally.handler',
       role: lambdaRole,
+      environment: {
+        SLACK_URL: process.env.SLACK_URL!,
+      },
     });
 
     new apigw.LambdaRestApi(this, 'Endpoint', {
